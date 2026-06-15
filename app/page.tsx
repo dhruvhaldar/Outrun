@@ -21,9 +21,15 @@ const money = (value: number) => new Intl.NumberFormat("en-US", { style: "curren
 const percent = (value: number | null | undefined) => value == null ? "n/a" : `${(value * 100).toFixed(2)}%`;
 
 export default function Home() {
+  const getOneYearAgoDate = () => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 1);
+    return d.toISOString().split("T")[0];
+  };
+
   const [mode, setMode] = useState<"weights" | "shares">("weights");
   const [initialCapital, setInitialCapital] = useState(5000);
-  const [startDate, setStartDate] = useState("2026-06-14");
+  const [startDate, setStartDate] = useState(getOneYearAgoDate());
   const [benchmark, setBenchmark] = useState("VOO");
   const [rebalance, setRebalance] = useState(false);
   const [holdings, setHoldings] = useState(defaultHoldings);

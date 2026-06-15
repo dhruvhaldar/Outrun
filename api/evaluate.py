@@ -160,3 +160,16 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         if status != 204:
             self.wfile.write(json.dumps(body, allow_nan=False).encode("utf-8"))
+
+
+if __name__ == "__main__":
+    import sys
+    try:
+        input_data = sys.stdin.read()
+        payload = json.loads(input_data or "{}")
+        result = evaluate(payload)
+        print(json.dumps(result, allow_nan=False))
+    except Exception as e:
+        print(json.dumps({"error": str(e)}), file=sys.stderr)
+        sys.exit(1)
+
